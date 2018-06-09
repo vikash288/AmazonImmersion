@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+.node circle {
+	fill: #fff;
+	stroke: steelblue;
+	stroke-width: 3px;
+}
+
+.node text {
+	font: 12px sans-serif;
+}
+
+.link {
+	fill: none;
+	stroke: #ccc;
+	stroke-width: 2px;
+}
+
+.node {
+	cursor: pointer;
+}
+
+div#tooltip {
+	color: #ffffff;
+	background: #000000;
+	opacity: 1;
+	padding: 5px;
+}
+</style>
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Integrating AWS Services and Marketplace Solutions to Deploy a BYOD
+Cloud Based Analytical System An End to End Solution</title>
+
+<link rel="shortcut icon"
+	href="https://d32gc0xr2ho6pa.cloudfront.net/img/general/favicon.ico"
+	type="image/x-icon" />
+<link
+	href="assets/bower_components/bootstrap/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="assets/bower_components/bootstrap/dist/css/bootstrap-theme.min.css"
+	rel="stylesheet">
+<link href="assets/bower_components/normalize-css/normalize.css"
+	rel="stylesheet">
+<link
+	href="assets/bower_components/font-awesome/css/font-awesome.min.css"
+	rel="stylesheet">
+<link href="assets/css/dashboard.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- Fixed navbar -->
+	<nav class="navbar navbar-default navbar-fixed-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
+					aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="javascript:void(0);"><!-- AWS Market
+					Place Immersion Project --></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<!-- <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Action</a></li>
+                <li><a href="#">Another action</a></li>
+                <li><a href="#">Something else here</a></li>
+                <li role="separator" class="divider"></li>
+                <li class="dropdown-header">Nav header</li>
+                <li><a href="#">Separated link</a></li>
+                <li><a href="#">One more separated link</a></li>
+              </ul>
+            </li>
+          </ul> -->
+				<ul class="nav navbar-nav navbar-right">
+					<!-- <li><a href="../navbar/">Default</a></li>
+            <li><a href="../navbar-static-top/">Static top</a></li> -->
+            <li><a href="javascript:void(0);"
+						id="architecture" ><i class="fa fa-picture-o fa-lg"
+							aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
+					<li><a href="https://github.com/ThirdEyeCSS/AmazonImmersion"
+						id="github" target="_blank"><i class="fa fa-github fa-lg"
+							aria-hidden="true"></i> <span class="sr-only">(current)</span></a></li>
+					<li><a href="javascript:void(0);" id="setting"><i
+							class="fa fa-cog fa-lg" aria-hidden="true"></i> <span
+							class="sr-only">(current)</span></a></li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	<div id="page-wrapper">
+
+		<div class="container-fluid">
+
+			<div class="row">
+				<div class="col-lg-12">
+					<h1 class="page-header" style="text-align: center;font-size: 1.4em;word-wrap: break-word;font-weight: bold;">
+						<img alt="" src="assets/img/index.png" height="80" width="80"  >
+						Integrating AWS Services and Marketplace Solutions to Deploy a BYOD Cloud Based Analytical System An End to End Solution
+					</h1>
+					<h5 style="text-align: center">
+						<strong>Prerequisites:</strong> Cloudbeam, MySQL and Redshift
+						should be up before running this demo.
+					</h5>
+				</div>
+			</div>
+
+			<div class="row" id="messageBox" style="display: none;">
+				<div class="col-lg-12">
+					<div class="alert alert-info alert-dismissable">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-hidden="true">&times;</button>
+						<i class="fa fa-info-circle"></i> <span id="progressmsg"></span>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel panel-primary">
+						<div class="panel-heading" style="text-align: center;"><strong>Data Load Steps</strong></div>
+						<div class="panel-body">
+
+							<div class="col-lg-2 col-md-6" style="width: 19%">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+
+										<strong>Step-1:</strong> Historical Weather Data Load
+										&nbsp;&nbsp;
+									</div>
+
+									<div class="panel-footer">
+										<button class="btn  btn-primary btn-sm " id="weatherData">
+											Start</button>
+										<a href="javascript:void(0);" id="weathermodal"> <span
+											class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-6" style="width: 21%">
+								<div class="panel panel-green">
+									<div class="panel-heading">
+										<strong>Step-2:</strong> Historical Stock and Company Data 
+										Load
+									</div>
+
+									<div class="panel-footer">
+										<button class="btn  btn-success btn-sm" id="mockupdata">
+											Start</button>
+										<a href="javascript:void(0);" id="companyData"
+											style="color: #5cb85c"> <span class="pull-right"><i
+												class="fa fa-arrow-circle-right"></i></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-6" style="width: 21%">
+								<div class="panel panel-yellow">
+									<div class="panel-heading">
+										<strong>Step-3:</strong> Historical Company Data 
+										Load
+									</div>
+
+									<div class="panel-footer">
+										<button class="btn  btn-warning btn-sm " id="nonstockDataBtn">
+											Start</button>
+										<a href="javascript:void(0);" id="nonstockData"
+											style="color: #f0ad4e"> <span class="pull-right"><i
+												class="fa fa-arrow-circle-right"></i></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-6" style="width: 20%">
+								<div class="panel panel-red">
+									<div class="panel-heading">
+										<strong>Step-4:</strong> Incremental Stock and Weather Data 
+										Load
+									</div>
+
+									<div class="panel-footer">
+										<button class="btn   btn-danger btn-sm" id="incrementalData">
+											Start</button>
+										<a href="javascript:void(0);" id="incrementalDataModal"
+											style="color: #d9534f"> <span class="pull-right"><i
+												class="fa fa-arrow-circle-right"></i></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+
+								</div>
+							</div>
+							<div class="col-lg-2 col-md-6" style="width: 19%;">
+								<div class="panel"
+									style="color: white; background-color: #0f9cad; border-color: #0f9cad;">
+									<div class="panel-heading" style="color: white">
+										<strong>Step-5:</strong> Storm Prediction
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									</div>
+
+									<div class="panel-footer">
+										<button
+											style="color: white; background-color: #0f9cad; border-color: #0f9cad;"
+											class="btn   btn-info btn-sm" id="startPrediction">Start</button>
+										<a href="javascript:void(0);" id="stormPredictionModal"
+											style="color: #0f9cad"> <span class="pull-right"><i
+												class="fa fa-arrow-circle-right"></i></span>
+											<div class="clearfix"></div>
+										</a>
+									</div>
+
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col-lg-12">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title" style="text-align: center;">
+										<b>Overall Data Flow</b>
+									</h3>
+								</div>
+								<div class="panel-body">
+									<div id="tree" style="margin-left: 150px;"></div>
+
+									<div id="tooltip" class="popover" role="tooltip"
+										style="background: #ffffff; color: black;">
+										<div class="popover-arrow"></div>
+										<h3 class="popover-title">Status</h3>
+										<div class="popover-content"
+											style="font-size: 10px; word-wrap: break-word;">Test</div>
+									</div>
+
+								</div>
+							</div>
+						</div>
+						
+					<!-- 	<div class="col-lg-6">
+							<div class="panel panel-primary">
+								<div class="panel-heading">
+									<h3 class="panel-title" style="text-align: center;">
+										<b>Data Row</b>
+									</h3>
+								</div>
+								<div class="panel-body">
+									<div id=""></div>
+
+									<div id="tooltip" class="popover" role="tooltip"
+										style="background: #ffffff; color: black;">
+										<div class="popover-arrow"></div>
+										<h3 class="popover-title">Status</h3>
+										<div class="popover-content"
+											style="font-size: 10px; word-wrap: break-word;">Test</div>
+									</div>
+
+								</div>
+							</div>
+						</div> -->
+					</div>
+
+				</div>
+
+			</div>
+			<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+
+			<script
+				src="assets/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+			<!-- <script
+		src="assets/bower_components/d3/d3.min.js"></script> -->
+
+			<script src="http://d3js.org/d3.v3.min.js"></script>
+
+			<script src="assets/js/d3_custom.js"></script>
+			<script src="assets/js/dashboard.js"></script>
+			<script type="text/javascript">
+///check for browser support
+
+//send json string like this
+//String json = "{\"class\":\"mysql\",\"color\":\"green\",\"status\":3}";
+//out.print("data: " +json + "\n\n");
+ 
+
+/*  if(typeof(EventSource)!=="undefined") {
+     var eSource = new EventSource("http://localhost:8080/AmazonByod/DashboardOperation");
+     
+        eSource.onmessage = function(event) {
+    	 //alert(event);
+        var obj = JSON.parse(event.data);
+        
+        $("path."+obj.class)
+        .delay(800)
+        .queue(function (next) { 
+        $(this).css('stroke', obj.color); 
+        next(); 
+        });
+
+        $("circle."+obj.class)
+        .delay(1000)
+        .queue(function (next) { 
+        $(this).css('stroke', 'black'); 
+        next(); 
+        });
+
+        $("circle."+obj.class)
+        .delay(1200)
+        .queue(function (next) { 
+        $(this).css('fill', obj.color); 
+        next(); 
+        });
+
+        $("text."+obj.class).attr('id',obj.status); 
+
+    };
+}
+else {
+document.getElementById("serverData").innerHTML="Whoops! Your browser doesn't receive server-sent events.";
+}  */
+
+</script>
+
+
+
+			<!-- <script>
+
+function change_color()
+{
+   $('.main').css("stroke", "green");
+   //.style("fill", function(d) { return d.level; });
+   $('.main').css("fill", "red");
+   //.style("stroke", function(d) { return d.target.level; })
+
+}
+</script> -->
+</body>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modaltitle"></h4>
+			</div>
+			<div class="modal-body">
+				<p id="modalbody"></p>
+				
+			</div>
+			<!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<div class="modal fade" id="settingmodal" tabindex="-1" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="modaltitle">Edit Project Properties</h4>
+			</div>
+			<div class="modal-body">
+				<form role="form" id="settingconfigfrom">
+				<div class="form-group">
+                    <label for="exampleInputEmail1">Resource Path</label>
+                      <input type="text"   class="form-control"
+                      id="resoucepath" name="resoucepath" required placeholder="Resource Path" readonly="readonly"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">S3 Access Key</label>
+                      <input type="text"   class="form-control"
+                      id="awsaccesskey" name="accesskey" required placeholder="S3 Access Key" readonly="readonly"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">S3 Secret Key</label>
+                      <input type="text" readonly class="form-control"
+                          id="awssecretkey" name="secretkey" required placeholder="S3 Secret Key"/>
+                  </div>
+                   <div class="form-group">
+                    <label for="exampleInputPassword1">Bucket Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="bucketname" name="bucketname"  required placeholder="Bucket Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift HOST URL</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshifthosturl" name="redshifthosturl" required placeholder="RedShift HOST URL"/>
+                  </div>
+                 
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift PORT</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftport" name="redshiftport" required placeholder="RedShift PORT"/>
+                  </div>
+                  
+                   <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift DB Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftdbname" name="redshiftdbname" required placeholder="RedShift DB Name"/>
+                  </div>
+                   <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift Master Username</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftusername" name="redshiftusername" required placeholder="RedShift Username"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">RedShift Master Password</label>
+                      <input type="text" readonly class="form-control"
+                          id="redshiftuserpassword"  name="redshiftuserpassword" required placeholder="RedShift Master Password"/>
+                  </div>
+                   <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql DB Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="mysqldbname" name="mysqldbname" required placeholder="Mysql DB Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql User Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="mysqlusername" name="mysqlusername" required placeholder="Mysql User Name"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql Password</label>
+                      <input type="text" readonly class="form-control"
+                          id="mysqlpassword" name="mysqlpassword" required placeholder="Mysql Password"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql JDBC URL</label>
+                      <input type="text" readonly class="form-control"
+                          id="mysqljdbcurl" name="mysqljdbcurl" required placeholder="Mysql JDBC URL"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Mysql JDBC CLASS NAME</label>
+                      <input type="text" readonly class="form-control"
+                          id="jdbcclass" name="mysqljdbcclass" required placeholder="Mysql JDBC URL"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">CloudBeam Automation URL</label>
+                      <input type="text" readonly class="form-control"
+                          id="cloudbeam_url" name="cloudbeam_auto_url" required placeholder="CloudBeam Automation URL"/>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">CloudBeam Task Name</label>
+                      <input type="text" readonly class="form-control"
+                          id="cbtaskname" name="cloudbeamtaskname" required placeholder="CloudBeam Task Name"/>
+                  </div>
+                  
+                 <div class="form-group">
+                    <label for="exampleInputPassword1">Kony Mobile URL</label>
+                      <input type="text" readonly class="form-control"
+                          id="kony_url" name="kony_url" required placeholder="Kony Url"/>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Kony APP ID</label>
+                      <input type="text" readonly class="form-control"
+                          id="konyappid" name="konyappid" required placeholder="Kony APP ID"/>
+                  </div>
+                  <!-- <button type="button" id="changeconfsetting" class="btn btn-default">Submit</button> -->
+                </form>
+			</div>
+			<!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+</html>
